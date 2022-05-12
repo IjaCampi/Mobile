@@ -39,7 +39,7 @@ import java.net.URISyntaxException;
 public class EquipementAjout extends Form{
     
      FileChooser FileChooser;
-      Form current;
+     ;
    
 
    
@@ -85,7 +85,7 @@ public class EquipementAjout extends Form{
                 
     
     public EquipementAjout() {
-           current = this; 
+          
         /*
         Le paramètre previous définit l'interface(Form) précédente.
         Quelque soit l'interface faisant appel à AddTask, on peut y revenir

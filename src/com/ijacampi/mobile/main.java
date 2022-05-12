@@ -21,6 +21,7 @@ import java.io.IOException;
 import com.codename1.ui.Toolbar;
 import com.codename1.io.NetworkEvent;
 import com.ijacampi.mobile.GUI.EquipementAjout;
+import com.ijacampi.mobile.GUI.EquipementList;
 
 
 /**
@@ -56,7 +57,7 @@ public class main {
     }
     
     public void start() {
-         new EquipementAjout().show();
+         new EquipementList(current).show();
     }
 
     public void stop() {
