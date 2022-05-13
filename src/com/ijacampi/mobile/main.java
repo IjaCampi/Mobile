@@ -22,6 +22,7 @@ import com.codename1.ui.Toolbar;
 import com.codename1.io.NetworkEvent;
 import com.ijacampi.mobile.GUI.EquipementAjout;
 import com.ijacampi.mobile.GUI.MoyenTransportAjout;
+import com.ijacampi.mobile.GUI.MoyenTransportList;
 
 
 /**
@@ -57,7 +58,7 @@ public class main {
     }
     
     public void start() {
-         new MoyenTransportAjout().show();
+         new MoyenTransportList(current).show();
     }
 
     public void stop() {

@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package com.ijacampi.mobile.Services;
-
-
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
@@ -25,6 +23,8 @@ import java.util.Map;
  */
 public class ServiceEquipement {
      public ArrayList<Equipement> tasks;
+           public ArrayList<Equipement> reclamations;
+
     
     public static ServiceEquipement instance=null;
     public boolean resultOK;
@@ -55,51 +55,49 @@ public class ServiceEquipement {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
-   /* 
+   
     public ArrayList<Equipement> parseTasks(String jsonText){
-        try {
-            tasks=new ArrayList<>();
-            JSONParser j = new JSONParser();// Instanciation d'un objet JSONParser permettant le parsing du résultat json
-
-            Map<String,Object> tasksListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
             
-            List<Map<String,Object>> list = (List<Map<String,Object>>)tasksListJson.get("root");
-            
-            //Parcourir la liste des tâches Json
-            for(Map<String,Object> obj : list){
-                //Création des hotels et récupération de leurs données
-                Equipement h = new Equipement();
-                float id = Float.parseFloat(obj.get("id").toString());
-                //int id = Integer.parseInt(obj.get("id").toString());
-                
-                h.setId((int)id);
-                h.setNom(obj.get("Nom").toString());
-                h.setAdresse(obj.get("adresse").toString());
-                h.setDescription(obj.get("description").toString());
-                h.setImage(obj.get("image").toString());
-                h.setPrix(Float.parseFloat(obj.get("prix").toString()));
-                h.setNb_chambre((int)Float.parseFloat(obj.get("NbChambre").toString()));
-                h.setNb_rate((int)Float.parseFloat(obj.get("nb_rate").toString()));
-                h.setNb_etoile(Float.parseFloat(obj.get("NbEtoile").toString()));
-                //Ajouter la tâche extraite de la réponse Json à la liste
-                tasks.add(h);
+         try {
+               reclamations = new ArrayList<>();
+               
+               JSONParser j = new JSONParser();
+               Map<String,Object> eventListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+               List<Map<String, Object>> list = (List<Map<String,Object>>)eventListJson.get("root");
+               System.out.println(eventListJson.toString());
+               
+               
+               for (Map<String, Object> obj : list) {
+                   Equipement e = new Equipement();
+                   float id = Float.parseFloat(obj.get("id").toString());
+                    e.setId((int)id);
+              //     e.setStatut(obj.get("statut").toString());
+          //    e.setStatut(obj.get("statut").toString());
+                   e.setDescription(obj.get("description").toString());
+                   e.setNom(obj.get("nom").toString());
+                   e.setCategorie(obj.get("categorie").toString());
+                   e.setMarque(obj.get("marque").toString());
+                   //e.setPhoto(obj.get("photo").toString());
+                   float prix=Float.parseFloat(obj.get("prix").toString());
+                   e.setPrix(prix);
+                   System.out.println(e.toString());
+                   reclamations.add(e);
+                   
+               }
+             
+               
+           } catch (IOException ex) {
+             //  Logger.getLogger(ServiceEvent.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           return reclamations;
             }
             
             
-        } catch (IOException ex) {
-            
-        }
-         /*
-            A ce niveau on a pu récupérer une liste des tâches à partir
-        de la base de données à travers un service web
-        
-        
-        return tasks;
-    }
+ 
+
     
-    
-    public ArrayList<Equipement> getAllEquipements(String nom){
-        String url = Statics.BASE_URL+"/hebergementJSON/gethotels?nom="+nom;
+    public ArrayList<Equipement> getAllEquipements (){
+        String url = Statics.BASE_URL+"/equipement/json/show/";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -115,7 +113,7 @@ public class ServiceEquipement {
     
     public boolean delete(int id)
     {
-        String url=Statics.BASE_URL + "/hebergementJSON/deletehotel/"+id;
+        String url=Statics.BASE_URL + "/equipement/json/delete/"+id;
         req.setUrl(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -128,6 +126,7 @@ public class ServiceEquipement {
         return resultOK;
  
     }
+    /*
     public Equipement Detail(int id)
     {
         
